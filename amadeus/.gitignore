@@ -1,0 +1,9 @@
+# Grade files
+.gradle
+build
+.project
+.settings
+.classpath
+.idea
+out
+.DS_Store

@@ -1,0 +1,175 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+  }
+}
+
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.12'
+    id 'java'
+    id 'net.saliman.cobertura' version '2.5.4'
+    id 'checkstyle'
+    id 'osgi'
+    id "maven-publish"
+    id "com.jfrog.bintray" version "1.7.3"
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+group = GROUP
+version = VERSION_NAME
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    doclava
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.2'
+    compileOnly "org.projectlombok:lombok:1.16.16"
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile "org.mockito:mockito-core:2.12.0"
+    testRuntime "org.slf4j:slf4j-api:1.7.10"
+    doclava 'com.google.doclava:doclava:1.0.6'
+}
+
+checkstyle {
+    toolVersion = '8.8'
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Title": POM_NAME,
+                   "Implementation-Version": VERSION_NAME,
+                   "Implementation-Vendor": VENDOR_NAME)
+
+        version = VERSION_NAME
+        symbolicName = POM_ARTIFACT_ID
+
+        instruction 'Export-Package', '*'
+    }
+}
+
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
+task delombok(type: DelombokTask, dependsOn: compileJava) {
+    ext.outputDir = file("$buildDir/delombok")
+    outputs.dir(outputDir)
+    sourceSets.main.java.srcDirs.each {
+        inputs.dir(it)
+        args(it, "-d", outputDir)
+    }
+}
+
+javadoc {
+    dependsOn project.configurations.doclava
+    dependsOn delombok
+    source = delombok.outputDir
+    failOnError = false
+    options.memberLevel = JavadocMemberLevel.PUBLIC
+    title = null
+    options.doclet = "com.google.doclava.Doclava"
+    options.docletpath = configurations.doclava.files.asType(List)
+}
+
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageIgnores = [ 'java.io.UnsupportedEncodingException', 'com.amadeus.resources.*' ]
+    coverageIgnoreTrivial = true
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name POM_LICENCE_NAME
+            url POM_LICENCE_URL
+            distribution POM_LICENCE_DIST
+        }
+    }
+    developers {
+        developer {
+            id "aroux"
+            name "Anthony Roux"
+            email "anthony.roux@amadeus.com"
+        }
+        developer {
+            id "cbetta"
+            name "Cristiano Betta"
+            email "cristiano@betta.io"
+        }
+    }
+
+    scm {
+        url POM_SCM_URL
+    }
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId GROUP
+            artifactId POM_ARTIFACT_ID
+            version VERSION_NAME
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', POM_DESCRIPTION)
+                root.appendNode('name', POM_NAME)
+                root.appendNode('url', POM_URL)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+bintray {
+	user = System.getProperty('bintray.user')
+	key = System.getProperty('bintray.key')
+	publications = ['mavenPublication']
+
+	pkg {
+		repo = BINTRAY_REPO
+		name = BINTRAY_NAME
+		licenses = ['MIT']
+		vcsUrl = POM_SCM_URL
+		version {
+			name = VERSION_NAME
+			desc = VERSION_NAME
+			released  = new Date()
+		}
+	}
+
+}
