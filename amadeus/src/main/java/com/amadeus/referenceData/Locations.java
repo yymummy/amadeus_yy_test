@@ -62,16 +62,17 @@ public class Locations {
    * @return an API response object
    * @throws ResponseException when an exception occurs
    */
-  public Location[] get(Params params) throws ResponseException {
+  public Response get(Params params) throws ResponseException {
     Response response = client.get("/v1/reference-data/locations", params);
-    return (Location[]) Resource.fromArray(response, Location[].class);
+    // return (Location[]) Resource.fromArray(response, Location[].class);
+    return response;
   }
 
   /**
    * Convenience method for calling <code>get</code> without any parameters.
    * @see Airports#get()
    */
-  public Location[] get() throws ResponseException {
+  public Response get() throws ResponseException {
     return get(null);
   }
 }

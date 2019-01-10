@@ -1,0 +1,5 @@
+IATA国际航班国家代码：
+https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A
+
+amadeus沙箱测试（包含接口说明）
+https://sandbox.amadeus.com/travel-innovation-sandbox/apis/get/location/%7Bcode%7D

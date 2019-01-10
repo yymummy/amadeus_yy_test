@@ -46,16 +46,16 @@ public class Booked {
    * @return an API response object
    * @throws ResponseException when an exception occurs
    */
-  public AirTraffic[] get(Params params) throws ResponseException {
+  public Response get(Params params) throws ResponseException {
     Response response = client.get("/v1/travel/analytics/air-traffic/booked", params);
-    return (AirTraffic[]) Resource.fromArray(response, AirTraffic[].class);
+    return response;
   }
 
   /**
    * Convenience method for calling <code>get</code> without any parameters.
    * @see Booked#get()
    */
-  public AirTraffic[] get() throws ResponseException {
+  public Response get() throws ResponseException {
     return get(null);
   }
 }

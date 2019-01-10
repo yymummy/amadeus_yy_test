@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "amadeus-java",
+                "projectName": "amadeus-java",
+                "workingDirectory": "d:\\amadeus_yy_test\\amadeus",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "amadeus-java",
+                "projectName": "amadeus-java",
+                "workingDirectory": "d:\\amadeus_yy_test\\amadeus",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

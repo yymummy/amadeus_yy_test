@@ -11,7 +11,7 @@ import org.junit.Test;
 public class AmadeusTest {
   @Test public void testBuilder() {
     assertTrue("should return a Configuration",
-               Amadeus.builder("id", "secret") instanceof Configuration);
+               Amadeus.builder("RcWc4ABGVGnbEod6qUCKUPI0O6x3IMo5", "ehS0OPSiPMUQN4YZ") instanceof Configuration);
   }
 
   @Test(expected = NullPointerException.class)
