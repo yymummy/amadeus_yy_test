@@ -3,3 +3,9 @@ https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A
 
 amadeus沙箱测试（包含接口说明）
 https://sandbox.amadeus.com/travel-innovation-sandbox/apis/get/location/%7Bcode%7D
+
+amadeus flight
+https://wenku.baidu.com/view/9569824c5fbfc77da369b116.html
+
+amadeus中文官网
+https://amadeus.com/zh

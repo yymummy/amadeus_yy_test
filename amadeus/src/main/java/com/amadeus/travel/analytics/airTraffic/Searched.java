@@ -50,9 +50,10 @@ public class Searched {
    * @return an API response object
    * @throws ResponseException when an exception occurs
    */
-  public Search[] get(Params params) throws ResponseException {
+  public Response get(Params params) throws ResponseException {
     Response response = client.get("/v1/travel/analytics/air-traffic/searched", params);
-    return (Search[]) Resource.fromArray(response, Search[].class);
+    // return (Search[]) Resource.fromArray(response, Search[].class);
+    return response;
   }
 
   /**
@@ -60,7 +61,7 @@ public class Searched {
    *
    * @see Searched#get()
    */
-  public Search[] get() throws ResponseException {
+  public Response get() throws ResponseException {
     return get(null);
   }
 }

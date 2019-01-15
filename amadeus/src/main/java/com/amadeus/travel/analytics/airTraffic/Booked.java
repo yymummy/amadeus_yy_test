@@ -48,6 +48,7 @@ public class Booked {
    */
   public Response get(Params params) throws ResponseException {
     Response response = client.get("/v1/travel/analytics/air-traffic/booked", params);
+    // return (AirTraffic[]) Resource.fromArray(response, AirTraffic[].class);
     return response;
   }
 

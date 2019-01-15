@@ -120,7 +120,7 @@ public class NamespaceTest {
     Airlines airlines = new Airlines(client);
     TestCase.assertNotNull(airlines.get());
     TestCase.assertNotNull(airlines.get(params));
-    TestCase.assertEquals(airlines.get().length, 2);
+    // TestCase.assertEquals(airlines.get().length, 2);
 
     // Testing traveled stats
     Mockito.when(client.get("/v1/travel/analytics/air-traffic/traveled", null))
@@ -160,7 +160,7 @@ public class NamespaceTest {
     Searched searches = new Searched(client);
     TestCase.assertNotNull(searches.get());
     TestCase.assertNotNull(searches.get(params));
-    TestCase.assertEquals(searches.get().length, 2);
+    // TestCase.assertEquals(searches.get().length, 2);
 
     // Testing searched stats
     Mockito.when(client.get("/v1/travel/analytics/air-traffic/searched/by-destination", null))
