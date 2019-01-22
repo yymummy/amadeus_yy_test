@@ -46,16 +46,17 @@ public class FlightDestinations {
    * @return an API response object
    * @throws ResponseException when an exception occurs
    */
-  public FlightDestination[] get(Params params) throws ResponseException {
+  public Response get(Params params) throws ResponseException {
     Response response = client.get("/v1/shopping/flight-destinations", params);
-    return (FlightDestination[]) Resource.fromArray(response, FlightDestination[].class);
+    // return (FlightDestination[]) Resource.fromArray(response, FlightDestination[].class);
+    return response;
   }
 
   /**
    * Convenience method for calling <code>get</code> without any parameters.
    * @see FlightDestinations#get()
    */
-  public FlightDestination[] get() throws ResponseException {
+  public Response get() throws ResponseException {
     return get(null);
   }
 }

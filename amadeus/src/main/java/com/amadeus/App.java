@@ -2,7 +2,6 @@ package com.amadeus;
 
 import com.amadeus.exceptions.ResponseException;
 import com.amadeus.referenceData.Locations;
-import com.amadeus.resources.Location;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -13,16 +12,16 @@ public class App {
     int pageSize = 0;
 
 
-    // 航空公司&城市查询
-    response = amadeus.referenceData.locations
-        .get(Params.with("keyword", "FLT")
-        .and("subType", Locations.ANY));
-    getResultArray(response, pageSize);
-    while (response != null) {
-      response = amadeus.next(response);
-      pageSize++;
-      getResultArray(response, pageSize);
-    }
+    // // 航空公司&城市查询
+    // response = amadeus.referenceData.locations
+    //     .get(Params.with("keyword", "LON")
+    //     .and("subType", Locations.ANY));
+    // getResultArray(response, pageSize);
+    // while (response != null) {
+    //   response = amadeus.next(response);
+    //   pageSize++;
+    //   getResultArray(response, pageSize);
+    // }
 
 
     // // 预定信息查询？？？
@@ -55,6 +54,15 @@ public class App {
     // // 航线信息查询
     // response = amadeus.referenceData.airlines.get(); // Params.with("airlineCodes", "ZH")
     // getResultArray(response, pageSize);
+
+    // 飞行灵感搜索
+    response = amadeus.shopping.flightDestinations.get(Params.with("origin", "LON"));
+    getResultArray(response, pageSize);
+    while (response != null) {
+      response = amadeus.next(response);
+      pageSize++;
+      getResultArray(response, pageSize);
+    }
   }
 
   private static void getResultArray(Response response, int pageSize) {
